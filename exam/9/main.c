@@ -101,7 +101,7 @@ void test() {
     }
 }
 
-int main() {
+int main(void) {
     setlocale(LC_ALL, "ru_RU.UTF-8");
     test();
     return 0;
