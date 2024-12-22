@@ -5,7 +5,7 @@
 
 int main() {
 
-    setlocale(LC_ALL, "ru_RU.UTF-8");
+    setlocale(LC_ALL, "");
 
     // Определение размера массива
     const int rows = 100;

@@ -2,18 +2,7 @@
 #include <float.h>
 #include <locale.h>
 
-#if defined(_WIN32) || defined(_WIN64)
-    #include <windows.h>
-#endif
-
-int main() {
-    setlocale(LC_ALL, "");
-
-#if defined(_WIN32) || defined(_WIN64)
-    // Устанавливаем кодировку консоли на UTF-8 для Windows
-    SetConsoleOutputCP(CP_UTF8);
-#endif  
-
+int main() {  
     // Вывод машинного епсилон для типа float
     float machine_epsilon = FLT_EPSILON;
 
