@@ -17,8 +17,8 @@ void test() {
         double length = vector_length(vector, 2);
 
         if(length != 5.0) {
-            printf("Ошибка 2");
-            exit(2);
+            printf("Ошибка 1");
+            exit(1);
         }
     }
     {

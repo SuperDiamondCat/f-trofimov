@@ -3,8 +3,7 @@
 #include <locale.h>
 
 int main() {
-    setlocale(LC_ALL, "ru_RU-UTF.8");
-
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     // Вывод машинного епсилон для типа float
     float machine_epsilon = FLT_EPSILON;
 
