@@ -1,6 +1,8 @@
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 // Функция для сортировки массива строк в лексикографическом порядке
 void sortStrings(char **array, int size) {
@@ -18,55 +20,137 @@ void sortStrings(char **array, int size) {
 
 // Функция для тестирования
 void test() {
-    int size;
+    {
+        // Исходный массив строк
+        const char *input[] = {"яблоко", "груша", "апельсин", "банан"};
+        const int size = sizeof(input) / sizeof(input[0]);
 
-    // Запрашиваем количество строк у пользователя
-    printf("Введите количество строк: ");
-    scanf("%d", &size);
-    
-    // Очищаем буфер ввода
-    getchar();
+        // Ожидаемый результат после сортировки
+        const char *expected[] = {"апельсин", "банан", "груша", "яблоко"};
 
-    // Динамическое выделение памяти для массива строк
-    char **array = (char **)malloc(size * sizeof(char *));
-    for (int i = 0; i < size; i++) {
-        array[i] = (char *)malloc(100 * sizeof(char)); // Предполагаем, что длина строки не больше 99 символов
+        // Динамическое выделение памяти для массива строк
+        char **array = (char **)malloc(size * sizeof(char *));
+        for (int i = 0; i < size; i++) {
+            array[i] = (char *)malloc((strlen(input[i]) + 1) * sizeof(char));
+            strcpy(array[i], input[i]);
+        }
+
+        if(array == NULL) {
+            printf("Ошибка выделения памяти");
+            exit(1);
+        }
+
+        // Сортировка массива строк
+        sortStrings(array, size);
+
+        // Проверка результата
+        for (int i = 0; i < size; i++) {
+            if(strcmp(array[i], expected[i]) != 0) {
+                printf("Ошибка в тесте 1");
+                // Освобождаем выделенную память
+                for (int i = 0; i < size; i++) {
+                    free(array[i]);
+                }
+                free(array);
+                exit(2);
+            }
+        }
+
+        // Освобождаем выделенную память
+        for (int i = 0; i < size; i++) {
+            free(array[i]);
+        }
+        free(array);
     }
+    {
+        // Исходный массив строк
+        const char *input[] = {"", "1", "0", "Test"};
+        const int size = sizeof(input) / sizeof(input[0]);
 
-    // Заполнение массива строками
-    printf("Введите строки:\n");
-    for (int i = 0; i < size; i++) {
-        printf("Строка[%d]: ", i);
-        fgets(array[i], 100, stdin);
-        
-        // Удаляем символ новой строки, если он есть
-        array[i][strcspn(array[i], "\n")] = '\0';
+        // Ожидаемый результат после сортировки
+        const char *expected[] = {"", "0", "1", "Test"};
+
+        // Динамическое выделение памяти для массива строк
+        char **array = (char **)malloc(size * sizeof(char *));
+        for (int i = 0; i < size; i++) {
+            array[i] = (char *)malloc((strlen(input[i]) + 1) * sizeof(char));
+            strcpy(array[i], input[i]);
+        }
+
+        if(array == NULL) {
+            printf("Ошибка выделения памяти");
+            exit(1);
+        }
+
+        // Сортировка массива строк
+        sortStrings(array, size);
+
+        // Проверка результата
+        for (int i = 0; i < size; i++) {
+            if(strcmp(array[i], expected[i]) != 0) {
+                printf("Ошибка в тесте 2");
+                // Освобождаем выделенную память
+                for (int i = 0; i < size; i++) {
+                    free(array[i]);
+                }
+                free(array);
+                exit(3);
+            }
+        }
+
+        // Освобождаем выделенную память
+        for (int i = 0; i < size; i++) {
+            free(array[i]);
+        }
+        free(array);
     }
+    {
+        // Исходный массив строк
+        const char *input[] = {".", "A", "сглыпа)", "Test"};
+        const int size = sizeof(input) / sizeof(input[0]);
 
-    // Выводим массив до сортировки
-    printf("Строки до сортировки:\n");
-    for (int i = 0; i < size; i++) {
-        printf("%s\n", array[i]);
+        // Ожидаемый результат после сортировки
+        const char *expected[] = {".", "A", "Test", "сглыпа)"};
+
+        // Динамическое выделение памяти для массива строк
+        char **array = (char **)malloc(size * sizeof(char *));
+        for (int i = 0; i < size; i++) {
+            array[i] = (char *)malloc((strlen(input[i]) + 1) * sizeof(char));
+            strcpy(array[i], input[i]);
+        }
+
+        if(array == NULL) {
+            printf("Ошибка выделения памяти");
+            exit(1);
+        }
+
+        // Сортировка массива строк
+        sortStrings(array, size);
+
+        // Проверка результата
+        for (int i = 0; i < size; i++) {
+            if(strcmp(array[i], expected[i]) != 0) {
+                printf("Ошибка в тесте 3");
+                // Освобождаем выделенную память
+                for (int i = 0; i < size; i++) {
+                    free(array[i]);
+                }
+                free(array);
+                exit(4);
+            }
+        }
+
+        // Освобождаем выделенную память
+        for (int i = 0; i < size; i++) {
+            free(array[i]);
+        }
+        free(array);
     }
-
-    // Вызываем функцию сортировки
-    sortStrings(array, size);
-
-    // Выводим отсортированный массив
-    printf("Строки после сортировки:\n");
-    for (int i = 0; i < size; i++) {
-        printf("%s\n", array[i]);
-    }
-
-    // Освобождаем выделенную память
-    for (int i = 0; i < size; i++) {
-        free(array[i]);
-    }
-    free(array);
 }
 
 // Основная функция
 int main() {
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     test();
     return 0;
 }
